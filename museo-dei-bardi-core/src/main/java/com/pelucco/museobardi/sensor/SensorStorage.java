@@ -1,5 +1,6 @@
 package com.pelucco.museobardi.sensor;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -14,6 +15,8 @@ public class SensorStorage {
 
 	private static final SensorStorage INSTANCE = new SensorStorage();
 	private Map<Integer, List<SensorData>> sensorsData = new LinkedHashMap<Integer, List<SensorData>>();
+
+	private static final long SENSOR_THRESHOLD_IN_MILLIS = 5000;
 
 	public static SensorStorage getInstance() {
 		return INSTANCE;
@@ -67,6 +70,26 @@ public class SensorStorage {
 
 	public List<SensorData> getSensorData(Integer sensor) {
 		return sensorsData.containsKey(sensor) ? sensorsData.get(sensor) : Collections.EMPTY_LIST;
+	}
+
+	public Map<Integer, SensorData> status() {
+		final Map<Integer, SensorData> status = new LinkedHashMap<Integer, SensorData>();
+		for (Integer i : sensorsData.keySet()) {
+			List<SensorData> tmp = sensorsData.get(i);
+			SensorData sensorData = tmp.get(tmp.size() - 1);
+			if (tmp.size() > 2) {
+				long now = Calendar.getInstance().getTimeInMillis();
+
+				// if sensor is not recent, skip this, it is old
+				if (now - sensorData.getTimestamp() > SENSOR_THRESHOLD_IN_MILLIS) {
+					continue;
+				}
+			}
+
+			status.put(i, sensorData);
+		}
+		return status;
+
 	}
 
 }

@@ -82,7 +82,7 @@
 		</div>
 	</div>
 	
-	<table class=" clearfix table table-condensed dati-generici">
+	<table id="stanza-0" class=" clearfix table table-condensed dati-generici">
 		<tr><td colspan="2"><h3 class="now"></h3></td></tr>
 		<tr><td>Visitatori totali:</td><td><span class="visitatori">-</span></td></tr>
 		<tr><td>Temperatura esterna:</td><td><span class="temperatura">-</span></td></tr>
@@ -162,13 +162,5 @@
 
 	</script>
 	
-	<script>
-    $(function(){
-    	moment.locale('it', {
-    		weekdays : "Domenica_Lunedi_Martedi_Mercoledi_Giovedi_Venerdi_Sabato".split("_"),
-    	});
-    	$(".dati-generici .now").html(moment().format('LLLL'));
-    });
-    </script>
  </body>
  </html>

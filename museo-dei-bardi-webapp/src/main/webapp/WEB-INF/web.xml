@@ -12,10 +12,20 @@
         <servlet-name>SensorServlet</servlet-name>
         <servlet-class>com.pelucco.museobardi.servlet.SensorServlet</servlet-class>
     </servlet>
-
+    
+    <servlet>
+        <servlet-name>StatusServlet</servlet-name>
+        <servlet-class>com.pelucco.museobardi.servlet.SensorStatusServlet</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>SensorServlet</servlet-name>
         <url-pattern>/servlets/sensor</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>StatusServlet</servlet-name>
+        <url-pattern>/servlets/status</url-pattern>
     </servlet-mapping>
 
 	<welcome-file-list>
