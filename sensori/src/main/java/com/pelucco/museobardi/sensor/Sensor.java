@@ -140,7 +140,7 @@ public class Sensor {
 		log.info("SENDING DATA: sensor=" + sensor + "; visitors=" + visitors + "; temperature=" + temperature + "; humidity=" + humidity + "; timestamp=" + timestamp);
 
 		try {
-			String url = "http://localhost:8080/museo-dei-bardi-webapp/servlets/sensor";
+			String url = "http://localhost:8080/museo/servlets/sensor";
 
 			url = url + "?sensor=" + sensor;
 			url = url + "&visitors=" + visitors;

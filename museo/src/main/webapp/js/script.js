@@ -10,7 +10,7 @@ function sensorUpdate(){
 		
 		
 		$.ajax({
-			url: '/museo-dei-bardi-webapp/servlets/status',
+			url: '/museo/servlets/status',
 			type : 'get',
 			dataType :	'json',
 			cache : false,
