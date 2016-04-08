@@ -12,13 +12,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 
-public class Sensor {
+public class SimulatoreSensori {
 
-	final static Logger log = Logger.getLogger(Sensor.class);
+	final static Logger log = Logger.getLogger(SimulatoreSensori.class);
 
 	public static void main(String[] args) {
 		try {
 
+			// vengono impostati dei limiti per evitare che il generatore dei numeri casuali dia risultati non verosimili
 			int[] maxVisitors = new int[] { 0, 15, 21, 16, 18, 45, 13, 19, 18, 13 };
 			float[] maxHumidity = new float[] { 150F, 150F, 150F, 150F, 150F, 150F, 150F, 150F, 150F, 150F };
 			float[] maxTemperature = new float[] { 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F };
@@ -27,65 +28,84 @@ public class Sensor {
 			float[] minHumidity = new float[] { 10F, 15F, 15F, 15F, 15F, 15F, 15F, 15F, 15F, 15F, };
 			float[] minTemperature = new float[] { 0F, 12F, 12F, 12F, 12F, 12F, 12F, 12F, 12F, 12F };
 
-			int[] visitors = new int[10];
-			float[] humidity = new float[10];
-			float[] temperature = new float[10];
+			int[] visitatori = new int[10];
+			float[] umidita = new float[10];
+			float[] temperatura = new float[10];
 
-			// out
-			visitors[0] = 0;
-			humidity[0] = 63F;
-			temperature[0] = 16.1F;
+			// viene impostata la temperatura esterna di partenza (sensore 0)
+			visitatori[0] = 0;
+			umidita[0] = 63F;
+			temperatura[0] = 16.1F;
 
-			sendData(0, visitors[0], temperature[0], humidity[0], Calendar.getInstance().getTimeInMillis());
+			sendData(0, visitatori[0], temperatura[0], umidita[0], Calendar.getInstance().getTimeInMillis());
 			Thread.sleep(1000 + RandomUtils.nextInt(2000));
 
-			// in
+			// vengono impostate le temerature interne di partenza (sensori 1-9)
 			List<Integer> sensorInitOrder = new LinkedList<Integer>();
 			for (int i = 1; i < 10; i++) {
-				visitors[i] = 0;
-				humidity[i] = 55F;
-				temperature[i] = 18.1F;
+				visitatori[i] = 0;
+				umidita[i] = 55F;
+				temperatura[i] = 18.1F;
 
 				sensorInitOrder.add(i);
 			}
 
+			// simulazione di accensione "random" dei sensori (altrimenti sarebbe sequenziale)
 			Collections.shuffle(sensorInitOrder);
 
+			// inizializzazione: viene mandato il primo dato per ogni sensore
 			for (int i : sensorInitOrder) {
-				sendData(i, visitors[i], temperature[i], humidity[i], Calendar.getInstance().getTimeInMillis());
+				sendData(i, visitatori[i], temperatura[i], umidita[i], Calendar.getInstance().getTimeInMillis());
+
+				// tra un invio e l'altro, un po' di pausa, effetto "show" dell'interfaccia web che si accende piano piano
 				Thread.sleep(1000 + RandomUtils.nextInt(2000));
 			}
 
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 
-			boolean run = true;
+			// contatore di rilevazioni
 			int count = 0;
-			while (run) {
+
+			// ciclo infinito per l'invio continuo delle rilevazioni
+			boolean continua = true;
+			while (continua) {
 				count++;
 
+				// vengono create e inviate le rilevazioni di tutti i sensori interni (1-9)
 				for (int i = 1; i < 10; i++) {
 
+					// simulazione perdita segnale sensore 3
 					if (i == 3 && count > 10 && count < 20) {
 						continue;
 					}
 
+					// simulazione di perdita segnale sensore 5
 					if (i == 5 && count > 20 && count < 30) {
 						continue;
 					}
 
+					// simulazione di perdita segnale sensore 2
 					if (i == 2 && count > 30 && count < 40) {
 						continue;
 					}
 
-					visitors[i] = delta(visitors[i], minVisitors[i], maxVisitors[i]);
+					// per ogni valore de sensore i-esimo, ne viene calcolata una ipotetica variazione
+					visitatori[i] = variazione(visitatori[i], minVisitors[i], maxVisitors[i]);
+					umidita[i] = variazione(umidita[i], minHumidity[i], maxHumidity[i]);
+					temperatura[i] = variazione(temperatura[i], minTemperature[i], maxTemperature[i]);
 
-					humidity[i] = delta(humidity[i], minHumidity[i], maxHumidity[i]);
-					temperature[i] = delta(temperature[i], minTemperature[i], maxTemperature[i]);
-					sendData(i, visitors[i], temperature[i], humidity[i], Calendar.getInstance().getTimeInMillis());
+					// istante della rilevazione
+					long time = Calendar.getInstance().getTimeInMillis();
+
+					// invio della rilevazione
+					sendData(i, visitatori[i], temperatura[i], umidita[i], time);
+
+					// pausa tra una comunicazione e l'altra
 					Thread.sleep(100);
 
 				}
 
+				// tra un set di rilevazione e l'altro, pausa di 1 secondo, per permettere all'interfaccia di sincronizzarsi
 				Thread.sleep(1000);
 
 			}
@@ -97,7 +117,15 @@ public class Sensor {
 
 	}
 
-	private static float delta(float value, float min, float max) {
+	/**
+	 * Questa funzione effettua una variazione (in positivo o in negativo, casualmente) di un valore e ne limita il suo valore finale tra un massimo ed un minimo Per numeri interi
+	 * 
+	 * @param value
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	private static float variazione(float value, float min, float max) {
 
 		float inc = 0.1F;
 		if (RandomUtils.nextBoolean()) {
@@ -117,7 +145,15 @@ public class Sensor {
 		return newValue;
 	}
 
-	private static int delta(int value, int min, int max) {
+	/**
+	 * Questa funzione effettua una variazione (in positivo o in negativo, casualmente) di un valore e ne limita il suo valore finale tra un massimo ed un minimo Per numeri con decimali
+	 * 
+	 * @param value
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	private static int variazione(int value, int min, int max) {
 		int inc = 1;
 		if (RandomUtils.nextBoolean()) {
 			inc = inc * RandomUtils.nextInt(3);
@@ -135,35 +171,40 @@ public class Sensor {
 		return newValue;
 	}
 
-	private static void sendData(int sensor, int visitors, float temperature, float humidity, long timestamp) {
+	/**
+	 * Invio del dato al server dei sensori
+	 * 
+	 * @param numSensore
+	 * @param visitatori
+	 * @param temperatura
+	 * @param umidita
+	 * @param time
+	 */
+	private static void sendData(int numSensore, int visitatori, float temperatura, float umidita, long time) {
 
-		log.info("SENDING DATA: sensor=" + sensor + "; visitors=" + visitors + "; temperature=" + temperature + "; humidity=" + humidity + "; timestamp=" + timestamp);
+		log.info("SENDING DATA: sensor=" + numSensore + "; visitors=" + visitatori + "; temperature=" + temperatura + "; humidity=" + umidita + "; timestamp=" + time);
 
 		try {
+
+			// costruzione dell'URL di chiamata
 			String url = "http://localhost:8080/museo/servlets/sensor";
 
-			url = url + "?sensor=" + sensor;
-			url = url + "&visitors=" + visitors;
-			url = url + "&temperature=" + temperature;
-			url = url + "&humidity=" + humidity;
-			url = url + "&timestamp=" + timestamp;
+			// accodamento dei parametri
+			url = url + "?sensor=" + numSensore;
+			url = url + "&visitors=" + visitatori;
+			url = url + "&temperature=" + temperatura;
+			url = url + "&humidity=" + umidita;
+			url = url + "&timestamp=" + time;
 
+			// creazione del client HTTP (micro-browser) per poter poi inviare la richiesta
 			HttpClient client = HttpClientBuilder.create().build();
+
+			// creazione della richiesta
 			HttpGet request = new HttpGet(url);
 
-			// add request header
+			// invio della richiesta al server
 			HttpResponse response = client.execute(request);
 
-			// System.out.println("Response Code : "
-			// + response.getStatusLine().getStatusCode());
-			//
-			// BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			//
-			// StringBuffer result = new StringBuffer();
-			// String line = "";
-			// while ((line = rd.readLine()) != null) {
-			// result.append(line);
-			// }
 		} catch (Throwable t) {
 			log.error("ERRORS WHILE SENDING DATA: " + t.getMessage());
 		}
