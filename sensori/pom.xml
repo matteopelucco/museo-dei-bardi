@@ -9,23 +9,25 @@
 	<artifactId>sensori</artifactId>
 
 	<dependencies>
+		<!-- inclusione libreria per log -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
 
+		<!-- inclusione libreria per invio dati HTTP -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.2</version>
 		</dependency>
 
+		<!-- inclusione libreria per random e altre utilities generiche -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.4</version>
 		</dependency>
-
 
 	</dependencies>
 </project>
