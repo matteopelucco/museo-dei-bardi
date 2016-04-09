@@ -1,4 +1,4 @@
-package com.pelucco.museobardi.sensor;
+package museobardi.sensori;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -187,7 +187,7 @@ public class SimulatoreSensori {
 		try {
 
 			// costruzione dell'URL di chiamata
-			String url = "http://localhost:8080/museo/servlets/sensor";
+			String url = "http://localhost:8080/museo/servlets/ricezione";
 
 			// accodamento dei parametri
 			url = url + "?sensor=" + numSensore;

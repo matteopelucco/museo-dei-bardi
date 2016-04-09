@@ -1,16 +1,25 @@
 $(function(){
+	
 	moment.locale('it', {
 		weekdays : "Domenica_Lunedi_Martedi_Mercoledi_Giovedi_Venerdi_Sabato".split("_"),
 	});
-	$(".dati-generici .now").html(moment().format('LLLL'));
+	
+	updateTime();
 });
+
+function updateTime(){
+	setTimeout(function(){
+		$(".dati-generici .now").html(moment().format('D MMMM YYYY, HH:mm:ss'));
+		updateTime();
+	}, 1000);
+}
 
 function sensorUpdate(){
 	setTimeout(function(){
 		
 		
 		$.ajax({
-			url: '/museo/servlets/status',
+			url: '/museo/servlets/invio',
 			type : 'get',
 			dataType :	'json',
 			cache : false,

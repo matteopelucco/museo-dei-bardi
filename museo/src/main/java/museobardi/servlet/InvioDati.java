@@ -1,4 +1,4 @@
-package com.pelucco.museobardi.servlet;
+package museobardi.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pelucco.museobardi.sensor.SensorData;
-import com.pelucco.museobardi.sensor.SensorStorage;
+import museobardi.data.SensorData;
+import museobardi.data.SensorStorage;
 
-public class SensorStatusServlet extends HttpServlet {
+public class InvioDati extends HttpServlet {
 
 	/**
 	 * 

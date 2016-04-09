@@ -1,4 +1,4 @@
-package com.pelucco.museobardi.sensor;
+package museobardi.data;
 
 import java.util.Calendar;
 import java.util.Collections;

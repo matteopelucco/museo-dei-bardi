@@ -1,4 +1,4 @@
-package com.pelucco.museobardi.sensor;
+package museobardi.data;
 
 public class SensorData {
 
