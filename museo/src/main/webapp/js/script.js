@@ -24,7 +24,7 @@ function sensorUpdate(){
 			dataType :	'json',
 			cache : false,
 			error : function (jqXHR, textStatus, error) {
-				// do nothing
+				alert("Si è verificato un errore inatteso");
 			},
 			complete : function(){
 				sensorUpdate();
@@ -35,9 +35,9 @@ function sensorUpdate(){
 				var totalVisitors = 0;
 				
 				$(data).each(function(index, item){
-					var sensor = item.sensor;
+					var sensor = item.sensore;
 					if (sensor != 0){
-						totalVisitors = totalVisitors + parseInt(item.visitors);
+						totalVisitors = totalVisitors + parseInt(item.visitatori);
 					}
 					
 					updatedSensors = updatedSensors + sensor + "-";
@@ -46,9 +46,9 @@ function sensorUpdate(){
 						
 						$("#stanza-" + sensor + " .stato-sensore").html("sensore rilevato");
 						
-						$("#stanza-" + sensor + " .visitatori").html(item.visitors);
-						$("#stanza-" + sensor + " .umidita").html(item.humidity + "&#37;");
-						$("#stanza-" + sensor + " .temperatura").html(item.temperature + "  &#8451;");
+						$("#stanza-" + sensor + " .visitatori").html(item.visitatori);
+						$("#stanza-" + sensor + " .umidita").html(item.umidita + "&#37;");
+						$("#stanza-" + sensor + " .temperatura").html(item.temperatura + "  &#8451;");
 					}
 					
 					

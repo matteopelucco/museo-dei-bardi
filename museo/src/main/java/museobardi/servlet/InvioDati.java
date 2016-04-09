@@ -9,38 +9,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import museobardi.data.SensorData;
-import museobardi.data.SensorStorage;
+import museobardi.data.ArchivioRilevazioni;
+import museobardi.data.Rilevamento;
 
+/**
+ * Servlet utilizzata dalle pagine HTML per richiedere, tramite Javascript, gli ultimi dati memorizzati
+ * 
+ * @author paolo
+ *
+ */
 public class InvioDati extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5511081859482625381L;
 
+	/**
+	 * Metodo principale, GET
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		final Map<Integer, SensorData> data = SensorStorage.getInstance().status();
+		final Map<Integer, Rilevamento> ultimeRilevazioni = ArchivioRilevazioni.getInstance().ultimeRilevazioni();
 
+		// si utilizza JSON come formato di interscambio dati
 		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
 
+		// viene progressivamente creata la stringa di risposta, un array di rilevazioni
+		// [{"sensor": "1", ...}, {"sensor": "2", ...}, ...]
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 
 		int count = 0;
-		for (Integer i : data.keySet()) {
-			SensorData sensorData = data.get(i);
+		for (Integer i : ultimeRilevazioni.keySet()) {
+			Rilevamento rilevamento = ultimeRilevazioni.get(i);
 			if (count != 0) {
 				sb.append(",");
 			}
 			sb.append("{");
-			sb.append("\"sensor\": \"" + i + "\",");
+			sb.append("\"sensore\": \"" + i + "\",");
 
-			sb.append("\"visitors\": \"" + sensorData.getVisitors() + "\",");
-			sb.append("\"temperature\": \"" + String.format("%.1f", sensorData.getTemperature()) + "\",");
-			sb.append("\"humidity\": \"" + String.format("%.1f", sensorData.getHumidity()) + "\"");
+			sb.append("\"visitatori\": \"" + rilevamento.getVisitatori() + "\",");
+			sb.append("\"temperatura\": \"" + String.format("%.1f", rilevamento.getTemperatura()) + "\",");
+			sb.append("\"humidita\": \"" + String.format("%.1f", rilevamento.getUmidita()) + "\"");
 
 			sb.append("}");
 
@@ -48,6 +56,8 @@ public class InvioDati extends HttpServlet {
 		}
 		sb.append("]");
 
+		// viene scritta la stringa di risposta nel canale di OUT (PrintWriter)
+		PrintWriter out = response.getWriter();
 		out.print(sb.toString());
 		out.flush();
 

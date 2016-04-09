@@ -12,6 +12,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 
+/**
+ * Classe Java il cui scopo è quello di simulare l'invio dei dati da parte di 10 sensori ambientali
+ * 
+ * @author matteo
+ *
+ */
 public class SimulatoreSensori {
 
 	final static Logger log = Logger.getLogger(SimulatoreSensori.class);
@@ -174,15 +180,15 @@ public class SimulatoreSensori {
 	/**
 	 * Invio del dato al server dei sensori
 	 * 
-	 * @param numSensore
+	 * @param codiceSensore
 	 * @param visitatori
 	 * @param temperatura
 	 * @param umidita
-	 * @param time
+	 * @param istante
 	 */
-	private static void sendData(int numSensore, int visitatori, float temperatura, float umidita, long time) {
+	private static void sendData(int codiceSensore, int visitatori, float temperatura, float umidita, long istante) {
 
-		log.info("SENDING DATA: sensor=" + numSensore + "; visitors=" + visitatori + "; temperature=" + temperatura + "; humidity=" + umidita + "; timestamp=" + time);
+		log.info("SENDING DATA: sensor=" + codiceSensore + "; visitors=" + visitatori + "; temperature=" + temperatura + "; humidity=" + umidita + "; timestamp=" + istante);
 
 		try {
 
@@ -190,11 +196,11 @@ public class SimulatoreSensori {
 			String url = "http://localhost:8080/museo/servlets/ricezione";
 
 			// accodamento dei parametri
-			url = url + "?sensor=" + numSensore;
-			url = url + "&visitors=" + visitatori;
-			url = url + "&temperature=" + temperatura;
-			url = url + "&humidity=" + umidita;
-			url = url + "&timestamp=" + time;
+			url = url + "?sensore=" + codiceSensore;
+			url = url + "&visitatori=" + visitatori;
+			url = url + "&temperatura=" + temperatura;
+			url = url + "&umidita=" + umidita;
+			url = url + "&istante=" + istante;
 
 			// creazione del client HTTP (micro-browser) per poter poi inviare la richiesta
 			HttpClient client = HttpClientBuilder.create().build();
