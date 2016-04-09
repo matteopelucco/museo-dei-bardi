@@ -24,7 +24,7 @@ function sensorUpdate(){
 			dataType :	'json',
 			cache : false,
 			error : function (jqXHR, textStatus, error) {
-				alert("Si è verificato un errore inatteso");
+				// non fare nulla
 			},
 			complete : function(){
 				sensorUpdate();
