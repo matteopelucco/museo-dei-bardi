@@ -35,6 +35,8 @@ public class InvioDati extends HttpServlet {
 		// viene progressivamente creata la stringa di risposta, un array di rilevazioni
 		// [{"sensor": "1", ...}, {"sensor": "2", ...}, ...]
 		StringBuffer sb = new StringBuffer();
+
+		// apertura array
 		sb.append("[");
 
 		int count = 0;
@@ -43,17 +45,20 @@ public class InvioDati extends HttpServlet {
 			if (count != 0) {
 				sb.append(",");
 			}
+			// oggetto "rilevazione"
 			sb.append("{");
 			sb.append("\"sensore\": \"" + i + "\",");
 
 			sb.append("\"visitatori\": \"" + rilevamento.getVisitatori() + "\",");
 			sb.append("\"temperatura\": \"" + String.format("%.1f", rilevamento.getTemperatura()) + "\",");
-			sb.append("\"humidita\": \"" + String.format("%.1f", rilevamento.getUmidita()) + "\"");
+			sb.append("\"umidita\": \"" + String.format("%.1f", rilevamento.getUmidita()) + "\"");
 
 			sb.append("}");
 
 			count++;
 		}
+
+		// chiusura array
 		sb.append("]");
 
 		// viene scritta la stringa di risposta nel canale di OUT (PrintWriter)
