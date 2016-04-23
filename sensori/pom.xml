@@ -19,14 +19,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
 		</dependency>
 
 		<!-- inclusione libreria per random e altre utilities generiche -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
 		</dependency>
 
 	</dependencies>
