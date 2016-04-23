@@ -43,7 +43,7 @@ public class SimulatoreSensori {
 			umidita[0] = 63F;
 			temperatura[0] = 16.1F;
 
-			sendData(0, visitatori[0], temperatura[0], umidita[0], Calendar.getInstance().getTimeInMillis());
+			inviaIDatiAlServer(0, visitatori[0], temperatura[0], umidita[0], Calendar.getInstance().getTimeInMillis());
 			Thread.sleep(1000 + RandomUtils.nextInt(2000));
 
 			// vengono impostate le temerature interne di partenza (sensori 1-9)
@@ -61,7 +61,7 @@ public class SimulatoreSensori {
 
 			// inizializzazione: viene mandato il primo dato per ogni sensore
 			for (int i : sensorInitOrder) {
-				sendData(i, visitatori[i], temperatura[i], umidita[i], Calendar.getInstance().getTimeInMillis());
+				inviaIDatiAlServer(i, visitatori[i], temperatura[i], umidita[i], Calendar.getInstance().getTimeInMillis());
 
 				// tra un invio e l'altro, un po' di pausa, effetto "show" dell'interfaccia web che si accende piano piano
 				Thread.sleep(1000 + RandomUtils.nextInt(2000));
@@ -104,7 +104,7 @@ public class SimulatoreSensori {
 					long time = Calendar.getInstance().getTimeInMillis();
 
 					// invio della rilevazione
-					sendData(i, visitatori[i], temperatura[i], umidita[i], time);
+					inviaIDatiAlServer(i, visitatori[i], temperatura[i], umidita[i], time);
 
 					// pausa tra una comunicazione e l'altra
 					Thread.sleep(100);
@@ -186,7 +186,7 @@ public class SimulatoreSensori {
 	 * @param umidita
 	 * @param istante
 	 */
-	private static void sendData(int codiceSensore, int visitatori, float temperatura, float umidita, long istante) {
+	private static void inviaIDatiAlServer(int codiceSensore, int visitatori, float temperatura, float umidita, long istante) {
 
 		log.info("SENDING DATA: sensor=" + codiceSensore + "; visitors=" + visitatori + "; temperature=" + temperatura + "; humidity=" + umidita + "; timestamp=" + istante);
 
