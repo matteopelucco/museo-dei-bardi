@@ -18,7 +18,7 @@ import museobardi.data.Rilevamento;
  * @author paolo
  *
  */
-public class InvioDati extends HttpServlet {
+public class LetturaDati extends HttpServlet {
 
 	private static final long serialVersionUID = 5511081859482625381L;
 

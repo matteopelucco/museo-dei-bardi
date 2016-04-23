@@ -28,11 +28,11 @@ function aggiornaSensori(){
 	// viene invocato un timer (ogni secondo)
 	setTimeout(function(){
 		
-		// viene chiamata la servlet di invio dati
+		// viene chiamata la servlet di lettura dati
 		$.ajax({
-			url: '/museo/servlets/invio', 		// url relativo alla pagina .html
+			url: '/museo/servlets/lettura', 	// url relativo alla pagina .html
 			type : 'get',						// protocollo GET
-			dataType :	'json', 				// formato di invio / ricezione dati
+			dataType :	'json', 				// formato di interscambio dati
 			cache : false, 						// evita di avere risultati non freschi
 			error : function (jqXHR, textStatus, error) {
 				// in caso di errore, non viene fatto nulla

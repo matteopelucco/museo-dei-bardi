@@ -12,16 +12,16 @@
 		<servlet-class>museobardi.servlet.RicezioneRilevazioni</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>InvioDati</servlet-name>
-		<servlet-class>museobardi.servlet.InvioDati</servlet-class>
+		<servlet-name>LetturaDati</servlet-name>
+		<servlet-class>museobardi.servlet.LetturaDati</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RicezioneRilevazioni</servlet-name>
 		<url-pattern>/servlets/ricezione</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>InvioDati</servlet-name>
-		<url-pattern>/servlets/invio</url-pattern>
+		<servlet-name>LetturaDati</servlet-name>
+		<url-pattern>/servlets/lettura</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
