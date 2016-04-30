@@ -9,14 +9,6 @@
 	<artifactId>museo</artifactId>
 	<packaging>war</packaging>
 	
-	<dependencies>
-		<dependency>
-			<groupId>com.pelucco</groupId>
-			<artifactId>museo-dei-bardi-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
