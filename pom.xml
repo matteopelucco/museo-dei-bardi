@@ -12,6 +12,13 @@
 		<module>museo</module>
 	</modules>
 
+	<!-- connessione a github -->
+	<scm>
+		<url>https://github.com/matteopelucco/museo-dei-bardi</url>
+		<connection>scm:git:git://github.com/matteopelucco/museo-dei-bardi.git</connection>
+		<developerConnection>scm:git:git@github.com:matteopelucco/museo-dei-bardi.git</developerConnection>
+	</scm>
+	
 	<dependencyManagement>
 		<dependencies>
 		
