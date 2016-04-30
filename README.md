@@ -7,6 +7,7 @@ In una notte d'inverno, un custode di un museo era stufo di andare ogni 10 minut
 Questo progetto nasce per dimostrare quanto sia semplice risolvere problemi apparentemente complicati.
 Si compone di due parti: 
 - museo: applicazione web Java EE (.war), contenente la logica delle stanze, un paio di endpoint (servlet) d'ausilo e una pagina web per mostrare i dati in un browser
+- sensori: client Java che permette la simulazione dell'invio dati di 9 sensori (9 sono le stanze) + uno ambientale (l'esterno del museo). 
 
 ## Installazione
 
