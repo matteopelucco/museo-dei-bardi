@@ -11,12 +11,15 @@ Si compone di due parti:
 ## Installazione
 
 1) Verificare l'applicazione e generare un .war con 
-- maven clean
+- mvn clean
 
 ## Utilizzo
 
 1) Avviare il servlet container (es: Jetty) con 
-- maven jetty:run
+- mvn jetty:run
+
+NB: l'applicazione è stata anche testata in Eclipse con Tomcat. 
+
 
 2) Aprire il proprio browser all'indirizzo
 - http://localhost:8080/museo
