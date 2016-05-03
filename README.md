@@ -16,7 +16,7 @@ Si compone di due parti:
 
 ## Utilizzo
 
-1) Avviare il servlet container (es: Jetty) con 
+1) Avviare il servlet container (es: Jetty) con
 - mvn jetty:run
 
 NB: l'applicazione è stata anche testata in Eclipse con Tomcat. 
